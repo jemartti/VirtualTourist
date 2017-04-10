@@ -140,11 +140,14 @@ class VTMapViewController: UIViewController {
 //    }
 //    
     // Displays the Create View
-    func loadAlbum(id: String) {
+    func loadAlbum(id: String, pinLocation: CLLocationCoordinate2D) {
         let albumVC = storyboard!.instantiateViewController(
             withIdentifier: "VTAlbumViewController"
         ) as! VTAlbumViewController
+        
         albumVC.id = id
+        albumVC.region = mapView.region
+        albumVC.pinLocation = pinLocation
         self.navigationController?.pushViewController(albumVC, animated: true)
     }
 
@@ -176,6 +179,6 @@ extension VTMapViewController: MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, didSelect: MKAnnotationView) {
         mapView.deselectAnnotation(didSelect.annotation!, animated: false)
-        loadAlbum(id: didSelect.annotation!.title!!)
+        loadAlbum(id: didSelect.annotation!.title!!, pinLocation: didSelect.annotation!.coordinate)
     }
 }
