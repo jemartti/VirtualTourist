@@ -1,26 +1,113 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="fNK-5v-fWg">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="tne-QT-ifu">
+        <!--Navigation Controller-->
+        <scene sceneID="rOx-aq-BtY">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController id="fNK-5v-fWg" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="f6Q-ft-ssR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="5Yd-LN-yMZ" kind="relationship" relationship="rootViewController" id="758-N3-d2R"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vJO-fl-OJH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1161" y="-1101"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="GRh-5h-qrt">
+            <objects>
+                <viewController id="5Yd-LN-yMZ" customClass="VTMapViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                        <viewControllerLayoutGuide type="top" id="5vg-ZE-bkE"/>
+                        <viewControllerLayoutGuide type="bottom" id="5rl-Ad-uNC"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                    <view key="view" contentMode="scaleToFill" id="IME-IV-de2">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="0nZ-wm-vsY">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="delegate" destination="5Yd-LN-yMZ" id="H0a-pZ-R3S"/>
+                                    <outletCollection property="gestureRecognizers" destination="zGb-P2-pCV" appends="YES" id="dqZ-wu-byQ"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="0nZ-wm-vsY" firstAttribute="leading" secondItem="IME-IV-de2" secondAttribute="leading" id="L7Z-yX-KWg"/>
+                            <constraint firstItem="5rl-Ad-uNC" firstAttribute="top" secondItem="0nZ-wm-vsY" secondAttribute="bottom" id="bv9-7M-vGm"/>
+                            <constraint firstItem="0nZ-wm-vsY" firstAttribute="top" secondItem="5vg-ZE-bkE" secondAttribute="bottom" id="hGa-KF-hGS"/>
+                            <constraint firstAttribute="trailing" secondItem="0nZ-wm-vsY" secondAttribute="trailing" id="hgA-Yv-7cd"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="6Jp-0q-gE6"/>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="mapView" destination="0nZ-wm-vsY" id="6rY-ic-90d"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1nu-R6-fXt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="zGb-P2-pCV" userLabel="dropPinGestureRecognizer">
+                    <connections>
+                        <action selector="dropPin:" destination="5Yd-LN-yMZ" id="0c6-zd-mIe"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
+            <point key="canvasLocation" x="-284" y="-1101.4992503748126"/>
+        </scene>
+        <!--Album View Controller-->
+        <scene sceneID="o1F-H8-fzO">
+            <objects>
+                <viewController storyboardIdentifier="VTAlbumViewController" id="38w-Jq-P95" customClass="VTAlbumViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="exx-S0-YQR"/>
+                        <viewControllerLayoutGuide type="bottom" id="jAZ-0E-w0Y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Exl-I3-o7E">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mcF-FK-ayC">
+                                <rect key="frame" x="16" y="313.5" width="343" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="p6I-wt-IPf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="mcF-FK-ayC" secondAttribute="trailing" id="8lk-nc-Ssb"/>
+                            <constraint firstItem="mcF-FK-ayC" firstAttribute="centerY" secondItem="Exl-I3-o7E" secondAttribute="centerY" id="JRM-vB-uE2"/>
+                            <constraint firstItem="mcF-FK-ayC" firstAttribute="leading" secondItem="Exl-I3-o7E" secondAttribute="leadingMargin" id="VPZ-YT-IRT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="idLabel" destination="mcF-FK-ayC" id="KmS-dc-i5j"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Noh-Cw-o9N" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="618" y="-1101"/>
         </scene>
     </scenes>
 </document>
