@@ -99,15 +99,33 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="albumViewCell" id="kXa-aq-NfV">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VTAlbumViewCell" id="kXa-aq-NfV" customClass="VTAlbumViewCell" customModule="VirtualTourist" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eBF-E0-SuZ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                                </imageView>
+                                            </subviews>
                                         </view>
+                                        <constraints>
+                                            <constraint firstItem="eBF-E0-SuZ" firstAttribute="leading" secondItem="kXa-aq-NfV" secondAttribute="leading" id="2II-n2-fEx"/>
+                                            <constraint firstAttribute="trailing" secondItem="eBF-E0-SuZ" secondAttribute="trailing" id="JUz-oa-vl3"/>
+                                            <constraint firstItem="eBF-E0-SuZ" firstAttribute="top" secondItem="kXa-aq-NfV" secondAttribute="top" id="P7S-8m-vt3"/>
+                                            <constraint firstAttribute="bottom" secondItem="eBF-E0-SuZ" secondAttribute="bottom" id="RAv-VJ-gXB"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="eBF-E0-SuZ" id="OCk-qO-eVk"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="38w-Jq-P95" id="92J-1p-MOL"/>
+                                    <outlet property="delegate" destination="38w-Jq-P95" id="CPf-zk-zle"/>
+                                </connections>
                             </collectionView>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0dD-0x-zZD">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>

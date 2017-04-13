@@ -9,96 +9,73 @@
 import UIKit
 import Foundation
 
-// MARK: - UdacityClient (Convenient Resource Methods)
+// MARK: - FlickrClient (Convenient Resource Methods)
 
-//extension FlickrClient {
-//    
-//    // MARK: GET Convenience Methods
-//    
-//    func getUserData(_ completionHandlerForGetUserData: @escaping (_ error: NSError?) -> Void) {
-//        
-//        /* Specify method */
-//        var mutableMethod: String = Methods.UsersKey
-//        mutableMethod = ClientHelpers.substituteKeyInMethod(mutableMethod, key: UdacityClient.URLKeys.UserKey, value: String(UdacityClient.sharedInstance().userKey!))!
-//        
-//        /* Make the request */
-//        let _ = taskForGETMethod(mutableMethod) { (results, error) in
-//            if let error = error {
-//                completionHandlerForGetUserData(error)
-//            } else {
-//                // Parse out the requested UdacityUser
-//                if let result = results?[UdacityClient.JSONResponseKeys.User] as? [String:AnyObject] {
-//                    UdacityClient.sharedInstance().user = UdacityUser.userFromResult(result)
-//                    completionHandlerForGetUserData(nil)
-//                } else {
-//                    completionHandlerForGetUserData(NSError(domain: "getUserData parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getUserData"]))
-//                }
-//            }
-//        }
-//    }
-//    
-//    // MARK: POST Convenience Methods
-//    
-//    func postSession(_ username: String, password: String, completionHandlerForPostSession: @escaping (_ error: NSError?) -> Void) {
-//        
-//        /* Specify HTTP body */
-//        let jsonBody = "{\"\(UdacityClient.JSONBodyKeys.Udacity)\": {\"\(UdacityClient.JSONBodyKeys.Username)\": \"\(username)\", \"\(UdacityClient.JSONBodyKeys.Password)\": \"\(password)\"}}"
-//        
-//        /* Make the request */
-//        let _ = taskForPOSTMethod(Methods.Account, jsonBody: jsonBody) { (results, error) in
-//            if let error = error {
-//                completionHandlerForPostSession(error)
-//                return
-//            }
-//            
-//            // Parse out the account and session information
-//            if let account = results?[UdacityClient.JSONResponseKeys.Account] as? [String:AnyObject],
-//                let session = results?[UdacityClient.JSONResponseKeys.Session] as? [String:AnyObject] {
-//                
-//                // Make sure it's a valid account
-//                if !(account[UdacityClient.JSONResponseKeys.AccountRegistered] as! Bool) {
-//                    completionHandlerForPostSession(NSError(domain: "postSession registration", code: 0, userInfo: [NSLocalizedDescriptionKey: "That user is not registered"]))
-//                }
-//                
-//                // Set the session data
-//                UdacityClient.sharedInstance().userKey = account[UdacityClient.JSONResponseKeys.AccountKey] as? String
-//                UdacityClient.sharedInstance().sessionID = session[UdacityClient.JSONResponseKeys.SessionID] as? String
-//                
-//                completionHandlerForPostSession(nil)
-//            } else {
-//                completionHandlerForPostSession(NSError(domain: "postSession parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse postSession"]))
-//            }
-//        }
-//    }
-//    
-//    // MARK: DELETE Convenience Methods
-//    
-//    func deleteSession(_ completionHandlerForDeleteSession: @escaping (_ error: NSError?) -> Void) {
-//        
-//        /* Specify HTTP cookies */
-//        var xsrfCookie: HTTPCookie? = nil
-//        let sharedCookieStorage = HTTPCookieStorage.shared
-//        for cookie in sharedCookieStorage.cookies! {
-//            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
-//        }
-//        
-//        /* Make the request */
-//        let _ = taskForDELETEMethod(Methods.Account, xsrfCookie: xsrfCookie) { (results, error) in
-//            if let error = error {
-//                completionHandlerForDeleteSession(error)
-//                return
-//            }
-//            
-//            // Make sure we had a valid response
-//            if let _ = results?[UdacityClient.JSONResponseKeys.Session] as? [String:AnyObject] {
-//                // Clear the session data
-//                UdacityClient.sharedInstance().userKey = nil
-//                UdacityClient.sharedInstance().sessionID = nil
-//                
-//                completionHandlerForDeleteSession(nil)
-//            } else {
-//                completionHandlerForDeleteSession(NSError(domain: "deleteSession parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse deleteSession"]))
-//            }
-//        }
-//    }
-//}
+extension FlickrClient {
+    
+    // MARK: GET Convenience Methods
+    
+    func getByLocation(
+        latitude: Double,
+        longitude: Double,
+        completionHandlerForGetByLocation: @escaping (_ results: [FlickrPhoto], _ error: NSError?) -> Void
+    ) {
+        
+        let parameters = [
+            FlickrClient.ParameterKeys.Method: FlickrClient.ParameterValues.SearchMethod,
+            FlickrClient.ParameterKeys.APIKey: FlickrClient.ParameterValues.APIKey,
+            FlickrClient.ParameterKeys.BoundingBox: bboxString(latitude: latitude, longitude: longitude),
+            FlickrClient.ParameterKeys.SafeSearch: FlickrClient.ParameterValues.UseSafeSearch,
+            FlickrClient.ParameterKeys.Extras: FlickrClient.ParameterValues.MediumURL,
+            FlickrClient.ParameterKeys.Format: FlickrClient.ParameterValues.ResponseFormat,
+            FlickrClient.ParameterKeys.NoJSONCallback: FlickrClient.ParameterValues.DisableJSONCallback
+        ]
+
+        /* Make the request */
+        let _ = taskForGETMethod(parameters as [String:AnyObject]) { (results, error) in
+            
+            /* Send the desired value(s) to completion handler */
+            if let error = error {
+                completionHandlerForGetByLocation([FlickrPhoto](), error)
+            } else {
+                guard let stat = results?[FlickrClient.ResponseKeys.Status] as? String, stat == FlickrClient.ResponseValues.OKStatus else {
+                    completionHandlerForGetByLocation([FlickrPhoto](), NSError(
+                        domain: "getByLocation parsing",
+                        code: 0,
+                        userInfo: [NSLocalizedDescriptionKey: "Flickr API returned an error."]
+                    ))
+                    return
+                }
+
+                guard let photosDictionary = results?[FlickrClient.ResponseKeys.Photos] as? [String:AnyObject] else {
+                    completionHandlerForGetByLocation([FlickrPhoto](), NSError(
+                        domain: "getByLocation parsing",
+                        code: 0,
+                        userInfo: [NSLocalizedDescriptionKey: "Cannot find key '\(FlickrClient.ResponseKeys.Photos)' in results"]
+                    ))
+                    return
+                }
+
+                guard let photosArray = photosDictionary[FlickrClient.ResponseKeys.Photo] as? [[String: AnyObject]] else {
+                    completionHandlerForGetByLocation([FlickrPhoto](), NSError(
+                        domain: "getByLocation parsing",
+                        code: 0,
+                        userInfo: [NSLocalizedDescriptionKey: "Cannot find key '\(FlickrClient.ResponseKeys.Photo)' in photosDictionary"]
+                    ))
+                    return
+                }
+                
+                completionHandlerForGetByLocation(FlickrPhoto.flickrPhotosFromResults(photosArray), nil)
+            }
+        }
+    }
+
+    private func bboxString(latitude: Double, longitude: Double) -> String {
+        // ensure bbox is bounded by minimum and maximums
+        let minimumLon = max(longitude - FlickrClient.Constants.SearchBBoxHalfWidth, FlickrClient.Constants.SearchLonRange.0)
+        let minimumLat = max(latitude - FlickrClient.Constants.SearchBBoxHalfHeight, FlickrClient.Constants.SearchLatRange.0)
+        let maximumLon = min(longitude + FlickrClient.Constants.SearchBBoxHalfWidth, FlickrClient.Constants.SearchLonRange.1)
+        let maximumLat = min(latitude + FlickrClient.Constants.SearchBBoxHalfHeight, FlickrClient.Constants.SearchLatRange.1)
+        return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
+    }
+}

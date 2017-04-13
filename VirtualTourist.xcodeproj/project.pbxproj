@@ -19,10 +19,10 @@
 		1615C6981E9AF18000EFCAC5 /* FlickrConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6971E9AF18000EFCAC5 /* FlickrConvenience.swift */; };
 		1615C69A1E9AF19500EFCAC5 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6991E9AF19500EFCAC5 /* FlickrPhoto.swift */; };
 		1615C69C1E9AF56E00EFCAC5 /* ClientHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C69B1E9AF56E00EFCAC5 /* ClientHelpers.swift */; };
-		1615C69F1E9AF69900EFCAC5 /* BorderedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C69E1E9AF69900EFCAC5 /* BorderedButton.swift */; };
 		1615C6A11E9AF6B500EFCAC5 /* VTMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6A01E9AF6B500EFCAC5 /* VTMapViewController.swift */; };
 		1615C6A31E9AF6E000EFCAC5 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6A21E9AF6E000EFCAC5 /* GCDBlackBox.swift */; };
 		1615C6A51E9AF72800EFCAC5 /* VTAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6A41E9AF72800EFCAC5 /* VTAlbumViewController.swift */; };
+		166A29AB1E9EFE8900EE1000 /* VTAlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166A29AA1E9EFE8900EE1000 /* VTAlbumViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,10 +40,10 @@
 		1615C6971E9AF18000EFCAC5 /* FlickrConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConvenience.swift; sourceTree = "<group>"; };
 		1615C6991E9AF19500EFCAC5 /* FlickrPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
 		1615C69B1E9AF56E00EFCAC5 /* ClientHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientHelpers.swift; sourceTree = "<group>"; };
-		1615C69E1E9AF69900EFCAC5 /* BorderedButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BorderedButton.swift; sourceTree = "<group>"; };
 		1615C6A01E9AF6B500EFCAC5 /* VTMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTMapViewController.swift; sourceTree = "<group>"; };
 		1615C6A21E9AF6E000EFCAC5 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		1615C6A41E9AF72800EFCAC5 /* VTAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTAlbumViewController.swift; sourceTree = "<group>"; };
+		166A29AA1E9EFE8900EE1000 /* VTAlbumViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTAlbumViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,7 +148,7 @@
 		1615C69D1E9AF68800EFCAC5 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				1615C69E1E9AF69900EFCAC5 /* BorderedButton.swift */,
+				166A29AA1E9EFE8900EE1000 /* VTAlbumViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -231,8 +231,8 @@
 				1615C6981E9AF18000EFCAC5 /* FlickrConvenience.swift in Sources */,
 				1615C68B1E9AE1F100EFCAC5 /* CodeDataStack.swift in Sources */,
 				1615C69A1E9AF19500EFCAC5 /* FlickrPhoto.swift in Sources */,
+				166A29AB1E9EFE8900EE1000 /* VTAlbumViewCell.swift in Sources */,
 				1615C6A51E9AF72800EFCAC5 /* VTAlbumViewController.swift in Sources */,
-				1615C69F1E9AF69900EFCAC5 /* BorderedButton.swift in Sources */,
 				1615C6A11E9AF6B500EFCAC5 /* VTMapViewController.swift in Sources */,
 				1615C6901E9AE26200EFCAC5 /* Model.xcdatamodeld in Sources */,
 				1615C68D1E9AE20900EFCAC5 /* CoreDataTableViewController.swift in Sources */,

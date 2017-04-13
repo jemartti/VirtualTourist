@@ -6,26 +6,31 @@
 //  Copyright © 2017 Jacob Marttinen. All rights reserved.
 //
 
-//struct FlickrPhoto {
-//    
-//    // MARK: Properties
-//    
-//    let key: String
-//    let firstName: String
-//    let lastName: String
-//    
-//    // MARK: Initializers
-//    
-//    // construct a UdacityUser from a dictionary
-//    init(dictionary: [String:AnyObject]) {
-//        
-//        key = dictionary[FlickrClient.JSONResponseKeys.UserKey] as! String
-//        firstName = dictionary[FlickrClient.JSONResponseKeys.UserFirstName] as! String
-//        lastName = dictionary[FlickrClient.JSONResponseKeys.UserLastName] as! String
-//    }
-//    
-//    // convert a result to a UdacityUser
-//    static func userFromResult(_ result: [String:AnyObject]) -> FlickrPhoto {
-//        return FlickrPhoto(dictionary: result)
-//    }
-//}
+import UIKit
+
+struct FlickrPhoto {
+    
+    // MARK: Properties
+    
+    let url: String
+    
+    // MARK: Initializers
+    
+    // construct a FlickrPhoto from a dictionary
+    init(dictionary: [String:AnyObject]) {
+        url = dictionary[FlickrClient.ResponseKeys.MediumURL] as! String
+    }
+    
+    // Convert results to an array of FlickrPhotos
+    static func flickrPhotosFromResults(_ results: [[String:AnyObject]]) -> [FlickrPhoto] {
+        
+        var flickrPhotos = [FlickrPhoto]()
+        
+        // iterate through array of dictionaries, each ParseStudent is a dictionary
+        for result in results {
+            flickrPhotos.append(FlickrPhoto(dictionary: result))
+        }
+        
+        return flickrPhotos
+    }
+}
