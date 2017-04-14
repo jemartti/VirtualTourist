@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 // MARK: - VTMapViewController: UIViewController
 
@@ -35,6 +36,15 @@ class VTMapViewController: UIViewController {
         annotation.coordinate = location
         annotation.title = UUID().uuidString
         mapView.addAnnotation(annotation)
+        
+        
+        let pin = Pin(context: appDelegate.stack.context)
+        pin.id = annotation.title!
+        pin.latitude = annotation.coordinate.latitude
+        pin.longitude = annotation.coordinate.longitude
+        pin.creationDate = Date() as NSDate
+        
+        appDelegate.stack.save()
     }
     
     // MARK: Life Cycle
@@ -52,6 +62,20 @@ class VTMapViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        // Get the stack
+        let stack = appDelegate.stack
+        
+        // Create a fetchrequest
+        let fr = NSFetchRequest<NSManagedObject>(entityName: "Pin")
+        
+        // Create the FetchedResultsController
+        do {
+            let pins = try stack.context.fetch(fr) as! [Pin]
+            initialiseAnnotations(pins)
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
     }
     
     // MARK: Administration
@@ -108,37 +132,28 @@ class VTMapViewController: UIViewController {
         return mapView.convert(touchPoint, toCoordinateFrom: mapView)
     }
     
-//    // Update the pins on the map
-//    private func updateAnnotations() {
-//        
-//        var annotations = [MKPointAnnotation]()
-//        
-//        for studentInformation in StudentInformation.studentInformations {
-//            let annotation = MKPointAnnotation()
-//            
-//            if let firstName = studentInformation.firstName {
-//                annotation.title = firstName + " "
-//            }
-//            if let lastName = studentInformation.lastName {
-//                annotation.title = (annotation.title)! + lastName
-//            }
-//            
-//            let lat = CLLocationDegrees(studentInformation.latitude!)
-//            let long = CLLocationDegrees(studentInformation.longitude!)
-//            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
-//            annotation.coordinate = coordinate
-//            
-//            if let mediaURL = studentInformation.mediaURL {
-//                annotation.subtitle = mediaURL
-//            }
-//            
-//            annotations.append(annotation)
-//        }
-//        
-//        self.mapView.removeAnnotations(self.mapView.annotations)
-//        self.mapView.addAnnotations(annotations)
-//    }
-//    
+    // Update the pins on the map
+    private func initialiseAnnotations(_ pins: [Pin]) {
+        print("Initialising")
+        var annotations = [MKPointAnnotation]()
+        
+        for pin in pins {
+            print(pin.id!)
+            let lat = CLLocationDegrees(pin.latitude)
+            let long = CLLocationDegrees(pin.longitude)
+            let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            
+            let annotation = MKPointAnnotation()
+            annotation.title = pin.id
+            annotation.coordinate = coordinate
+            
+            annotations.append(annotation)
+        }
+        
+        self.mapView.removeAnnotations(self.mapView.annotations)
+        self.mapView.addAnnotations(annotations)
+    }
+
     // Displays the Create View
     func loadAlbum(id: String, pinLocation: CLLocationCoordinate2D) {
         let albumVC = storyboard!.instantiateViewController(
