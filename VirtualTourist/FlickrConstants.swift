@@ -6,7 +6,7 @@
 //  Copyright © 2017 Jacob Marttinen. All rights reserved.
 //
 
-// MARK: - Constants
+// MARK: - FlickrClient (Constants)
 
 extension FlickrClient {
     

@@ -1,5 +1,5 @@
 //
-//  CoreDataTableViewController.swift
+//  CoreDataStack.swift
 //  VirtualTourist
 //
 //  Created by Jacob Marttinen on 4/9/17.

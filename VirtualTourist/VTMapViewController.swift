@@ -1,5 +1,5 @@
 //
-//  MapViewController.swift
+//  VTMapViewController.swift
 //  VirtualTourist
 //
 //  Created by Jacob Marttinen on 4/9/17.
@@ -25,6 +25,8 @@ class VTMapViewController: UIViewController {
     // MARK: Actions
     
     @IBAction func dropPin(_ sender: UILongPressGestureRecognizer) {
+        
+        // Make sure the action is only triggered once
         if (sender.state != UIGestureRecognizerState.began) {
             return
         }
@@ -37,13 +39,12 @@ class VTMapViewController: UIViewController {
         annotation.title = UUID().uuidString
         mapView.addAnnotation(annotation)
         
-        
+        // Create the Pin and save to CoreData
         let pin = Pin(context: appDelegate.stack.context)
         pin.id = annotation.title!
         pin.latitude = annotation.coordinate.latitude
         pin.longitude = annotation.coordinate.longitude
         pin.creationDate = Date() as NSDate
-        
         appDelegate.stack.save()
     }
     
@@ -63,18 +64,14 @@ class VTMapViewController: UIViewController {
         
         self.navigationController?.setNavigationBarHidden(true, animated: true)
         
-        // Get the stack
+        // Load the existing Pin set
         let stack = appDelegate.stack
-        
-        // Create a fetchrequest
         let fr = NSFetchRequest<NSManagedObject>(entityName: "Pin")
-        
-        // Create the FetchedResultsController
         do {
             let pins = try stack.context.fetch(fr) as! [Pin]
             initialiseAnnotations(pins)
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+        } catch _ as NSError {
+            self.alertUserOfFailure(message: "Existing data load failed.")
         }
     }
     
@@ -132,7 +129,7 @@ class VTMapViewController: UIViewController {
         return mapView.convert(touchPoint, toCoordinateFrom: mapView)
     }
     
-    // Update the pins on the map
+    // Replace the current annotation set with a given Pin set
     private func initialiseAnnotations(_ pins: [Pin]) {
         var annotations = [MKPointAnnotation]()
         
@@ -152,14 +149,13 @@ class VTMapViewController: UIViewController {
         self.mapView.addAnnotations(annotations)
     }
 
-    // Displays the Create View
+    // Display the Album View
     func loadAlbum(id: String, pinLocation: CLLocationCoordinate2D) {
         let albumVC = storyboard!.instantiateViewController(
             withIdentifier: "VTAlbumViewController"
         ) as! VTAlbumViewController
         
         albumVC.id = id
-        albumVC.region = mapView.region
         albumVC.pinLocation = pinLocation
         self.navigationController?.pushViewController(albumVC, animated: true)
     }

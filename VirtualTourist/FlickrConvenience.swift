@@ -40,33 +40,27 @@ extension FlickrClient {
             if let error = error {
                 completionHandlerForGetByLocation(photoStrings, error)
             } else {
+                func sendError(_ error: String) {
+                    let userInfo = [NSLocalizedDescriptionKey : error]
+                    completionHandlerForGetByLocation(photoStrings, NSError(domain: "FlickrClient", code: 1, userInfo: userInfo))
+                }
+                
                 guard let stat = results?[FlickrClient.ResponseKeys.Status] as? String, stat == FlickrClient.ResponseValues.OKStatus else {
-                    completionHandlerForGetByLocation(photoStrings, NSError(
-                        domain: "getByLocation parsing",
-                        code: 0,
-                        userInfo: [NSLocalizedDescriptionKey: "Flickr API returned an error."]
-                    ))
+                    sendError("Flickr API returned an error.")
                     return
                 }
 
                 guard let photosDictionary = results?[FlickrClient.ResponseKeys.Photos] as? [String:AnyObject] else {
-                    completionHandlerForGetByLocation(photoStrings, NSError(
-                        domain: "getByLocation parsing",
-                        code: 0,
-                        userInfo: [NSLocalizedDescriptionKey: "Cannot find key '\(FlickrClient.ResponseKeys.Photos)' in results"]
-                    ))
+                    sendError("Cannot find key '\(FlickrClient.ResponseKeys.Photos)' in results")
                     return
                 }
 
                 guard let photosArray = photosDictionary[FlickrClient.ResponseKeys.Photo] as? [[String: AnyObject]] else {
-                    completionHandlerForGetByLocation(photoStrings, NSError(
-                        domain: "getByLocation parsing",
-                        code: 0,
-                        userInfo: [NSLocalizedDescriptionKey: "Cannot find key '\(FlickrClient.ResponseKeys.Photo)' in photosDictionary"]
-                    ))
+                    sendError("Cannot find key '\(FlickrClient.ResponseKeys.Photo)' in photosDictionary")
                     return
                 }
                 
+                // Pull `count` random photos from the array
                 for photo in photosArray.shuffled().prefix(count) {
                     photoStrings.append(photo[FlickrClient.ResponseKeys.MediumURL] as! String)
                 }
@@ -76,12 +70,26 @@ extension FlickrClient {
         }
     }
 
+    // MARK: Convenience method helpers
+    
     private func bboxString(latitude: Double, longitude: Double) -> String {
         // ensure bbox is bounded by minimum and maximums
-        let minimumLon = max(longitude - FlickrClient.Constants.SearchBBoxHalfWidth, FlickrClient.Constants.SearchLonRange.0)
-        let minimumLat = max(latitude - FlickrClient.Constants.SearchBBoxHalfHeight, FlickrClient.Constants.SearchLatRange.0)
-        let maximumLon = min(longitude + FlickrClient.Constants.SearchBBoxHalfWidth, FlickrClient.Constants.SearchLonRange.1)
-        let maximumLat = min(latitude + FlickrClient.Constants.SearchBBoxHalfHeight, FlickrClient.Constants.SearchLatRange.1)
+        let minimumLon = max(
+            longitude - FlickrClient.Constants.SearchBBoxHalfWidth,
+            FlickrClient.Constants.SearchLonRange.0
+        )
+        let minimumLat = max(
+            latitude - FlickrClient.Constants.SearchBBoxHalfHeight,
+            FlickrClient.Constants.SearchLatRange.0
+        )
+        let maximumLon = min(
+            longitude + FlickrClient.Constants.SearchBBoxHalfWidth,
+            FlickrClient.Constants.SearchLonRange.1
+        )
+        let maximumLat = min(
+            latitude + FlickrClient.Constants.SearchBBoxHalfHeight,
+            FlickrClient.Constants.SearchLatRange.1
+        )
         return "\(minimumLon),\(minimumLat),\(maximumLon),\(maximumLat)"
     }
 }

@@ -15,4 +15,5 @@ class VTAlbumViewCell: UICollectionViewCell {
     // MARK: Outlets
     
     @IBOutlet weak var imageView: UIImageView!
+    
 }

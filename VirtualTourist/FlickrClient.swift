@@ -8,7 +8,7 @@
 
 import Foundation
 
-// MARK: - UdacityClient: NSObject
+// MARK: - FlickrClient: NSObject
 
 class FlickrClient : NSObject {
     
@@ -34,7 +34,10 @@ class FlickrClient : NSObject {
     
     // MARK: GET
     
-    func taskForGETMethod(_ parameters: [String:AnyObject], completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void) -> URLSessionDataTask {
+    func taskForGETMethod(
+        _ parameters: [String:AnyObject],
+        completionHandlerForGET: @escaping (_ result: AnyObject?, _ error: NSError?) -> Void
+    ) -> URLSessionDataTask {
         
         /* Build the URL, Configure the request */
         let request = NSMutableURLRequest(url: flickrURLFromParameters(parameters))
@@ -44,7 +47,7 @@ class FlickrClient : NSObject {
             
             func sendError(_ error: String) {
                 let userInfo = [NSLocalizedDescriptionKey : error]
-                completionHandlerForGET(nil, NSError(domain: "taskForGETMethod", code: 1, userInfo: userInfo))
+                completionHandlerForGET(nil, NSError(domain: "FlickrClient", code: 1, userInfo: userInfo))
             }
             
             /* GUARD: Was there an error? */
@@ -74,7 +77,9 @@ class FlickrClient : NSObject {
             }
             
             /* Parse the data and use the data (happens in completion handler) */
-            ClientHelpers.convertDataWithCompletionHandler(data, completionHandlerForConvertData: completionHandlerForGET)
+            ClientHelpers.convertDataWithCompletionHandler(
+                data, completionHandlerForConvertData: completionHandlerForGET
+            )
         }
         
         /* Start the request */
