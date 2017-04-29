@@ -18,7 +18,8 @@ extension FlickrClient {
     func getByLocation(
         latitude: Double,
         longitude: Double,
-        completionHandlerForGetByLocation: @escaping (_ results: [FlickrPhoto], _ error: NSError?) -> Void
+        count: Int,
+        completionHandlerForGetByLocation: @escaping (_ results: [String], _ error: NSError?) -> Void
     ) {
         
         let parameters = [
@@ -33,13 +34,14 @@ extension FlickrClient {
 
         /* Make the request */
         let _ = taskForGETMethod(parameters as [String:AnyObject]) { (results, error) in
+            var photoStrings = [String]()
             
             /* Send the desired value(s) to completion handler */
             if let error = error {
-                completionHandlerForGetByLocation([FlickrPhoto](), error)
+                completionHandlerForGetByLocation(photoStrings, error)
             } else {
                 guard let stat = results?[FlickrClient.ResponseKeys.Status] as? String, stat == FlickrClient.ResponseValues.OKStatus else {
-                    completionHandlerForGetByLocation([FlickrPhoto](), NSError(
+                    completionHandlerForGetByLocation(photoStrings, NSError(
                         domain: "getByLocation parsing",
                         code: 0,
                         userInfo: [NSLocalizedDescriptionKey: "Flickr API returned an error."]
@@ -48,7 +50,7 @@ extension FlickrClient {
                 }
 
                 guard let photosDictionary = results?[FlickrClient.ResponseKeys.Photos] as? [String:AnyObject] else {
-                    completionHandlerForGetByLocation([FlickrPhoto](), NSError(
+                    completionHandlerForGetByLocation(photoStrings, NSError(
                         domain: "getByLocation parsing",
                         code: 0,
                         userInfo: [NSLocalizedDescriptionKey: "Cannot find key '\(FlickrClient.ResponseKeys.Photos)' in results"]
@@ -57,7 +59,7 @@ extension FlickrClient {
                 }
 
                 guard let photosArray = photosDictionary[FlickrClient.ResponseKeys.Photo] as? [[String: AnyObject]] else {
-                    completionHandlerForGetByLocation([FlickrPhoto](), NSError(
+                    completionHandlerForGetByLocation(photoStrings, NSError(
                         domain: "getByLocation parsing",
                         code: 0,
                         userInfo: [NSLocalizedDescriptionKey: "Cannot find key '\(FlickrClient.ResponseKeys.Photo)' in photosDictionary"]
@@ -65,7 +67,11 @@ extension FlickrClient {
                     return
                 }
                 
-                completionHandlerForGetByLocation(FlickrPhoto.flickrPhotosFromResults(photosArray), nil)
+                for photo in photosArray.shuffled().prefix(count) {
+                    photoStrings.append(photo[FlickrClient.ResponseKeys.MediumURL] as! String)
+                }
+                
+                completionHandlerForGetByLocation(photoStrings, nil)
             }
         }
     }

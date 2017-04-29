@@ -82,7 +82,7 @@ class VTMapViewController: UIViewController {
     
     private func alertUserOfFailure( message: String) {
         
-        performUIUpdatesOnMain {
+        DispatchQueue.main.async {
             let alertController = UIAlertController(
                 title: "Action Failed",
                 message: message,
@@ -134,11 +134,9 @@ class VTMapViewController: UIViewController {
     
     // Update the pins on the map
     private func initialiseAnnotations(_ pins: [Pin]) {
-        print("Initialising")
         var annotations = [MKPointAnnotation]()
         
         for pin in pins {
-            print(pin.id!)
             let lat = CLLocationDegrees(pin.latitude)
             let long = CLLocationDegrees(pin.longitude)
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)

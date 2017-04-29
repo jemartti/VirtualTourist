@@ -16,11 +16,10 @@
 		1615C6941E9AF16B00EFCAC5 /* FlickrClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6931E9AF16B00EFCAC5 /* FlickrClient.swift */; };
 		1615C6961E9AF17600EFCAC5 /* FlickrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6951E9AF17600EFCAC5 /* FlickrConstants.swift */; };
 		1615C6981E9AF18000EFCAC5 /* FlickrConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6971E9AF18000EFCAC5 /* FlickrConvenience.swift */; };
-		1615C69A1E9AF19500EFCAC5 /* FlickrPhoto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6991E9AF19500EFCAC5 /* FlickrPhoto.swift */; };
 		1615C69C1E9AF56E00EFCAC5 /* ClientHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C69B1E9AF56E00EFCAC5 /* ClientHelpers.swift */; };
 		1615C6A11E9AF6B500EFCAC5 /* VTMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6A01E9AF6B500EFCAC5 /* VTMapViewController.swift */; };
-		1615C6A31E9AF6E000EFCAC5 /* GCDBlackBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6A21E9AF6E000EFCAC5 /* GCDBlackBox.swift */; };
 		1615C6A51E9AF72800EFCAC5 /* VTAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1615C6A41E9AF72800EFCAC5 /* VTAlbumViewController.swift */; };
+		1617D1721EB53E3000B8A8BC /* MutableCollection+Shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1617D1711EB53E3000B8A8BC /* MutableCollection+Shuffle.swift */; };
 		166A29AB1E9EFE8900EE1000 /* VTAlbumViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166A29AA1E9EFE8900EE1000 /* VTAlbumViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -36,11 +35,10 @@
 		1615C6931E9AF16B00EFCAC5 /* FlickrClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrClient.swift; sourceTree = "<group>"; };
 		1615C6951E9AF17600EFCAC5 /* FlickrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConstants.swift; sourceTree = "<group>"; };
 		1615C6971E9AF18000EFCAC5 /* FlickrConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrConvenience.swift; sourceTree = "<group>"; };
-		1615C6991E9AF19500EFCAC5 /* FlickrPhoto.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrPhoto.swift; sourceTree = "<group>"; };
 		1615C69B1E9AF56E00EFCAC5 /* ClientHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClientHelpers.swift; sourceTree = "<group>"; };
 		1615C6A01E9AF6B500EFCAC5 /* VTMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTMapViewController.swift; sourceTree = "<group>"; };
-		1615C6A21E9AF6E000EFCAC5 /* GCDBlackBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GCDBlackBox.swift; sourceTree = "<group>"; };
 		1615C6A41E9AF72800EFCAC5 /* VTAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTAlbumViewController.swift; sourceTree = "<group>"; };
+		1617D1711EB53E3000B8A8BC /* MutableCollection+Shuffle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MutableCollection+Shuffle.swift"; sourceTree = "<group>"; };
 		166A29AA1E9EFE8900EE1000 /* VTAlbumViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VTAlbumViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -75,7 +73,6 @@
 			isa = PBXGroup;
 			children = (
 				1615C6741E997AF200EFCAC5 /* AppDelegate.swift */,
-				1615C6A21E9AF6E000EFCAC5 /* GCDBlackBox.swift */,
 				1615C6861E9AE19B00EFCAC5 /* Models */,
 				1615C69D1E9AF68800EFCAC5 /* View */,
 				1615C6891E9AE1AC00EFCAC5 /* Controllers */,
@@ -98,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				1615C6801E997AF200EFCAC5 /* Info.plist */,
+				1617D1711EB53E3000B8A8BC /* MutableCollection+Shuffle.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -136,7 +134,6 @@
 				1615C6931E9AF16B00EFCAC5 /* FlickrClient.swift */,
 				1615C6951E9AF17600EFCAC5 /* FlickrConstants.swift */,
 				1615C6971E9AF18000EFCAC5 /* FlickrConvenience.swift */,
-				1615C6991E9AF19500EFCAC5 /* FlickrPhoto.swift */,
 			);
 			name = Flickr;
 			sourceTree = "<group>";
@@ -235,14 +232,13 @@
 				1615C6961E9AF17600EFCAC5 /* FlickrConstants.swift in Sources */,
 				1615C6981E9AF18000EFCAC5 /* FlickrConvenience.swift in Sources */,
 				1615C68B1E9AE1F100EFCAC5 /* CodeDataStack.swift in Sources */,
-				1615C69A1E9AF19500EFCAC5 /* FlickrPhoto.swift in Sources */,
 				166A29AB1E9EFE8900EE1000 /* VTAlbumViewCell.swift in Sources */,
+				1617D1721EB53E3000B8A8BC /* MutableCollection+Shuffle.swift in Sources */,
 				1615C6A51E9AF72800EFCAC5 /* VTAlbumViewController.swift in Sources */,
 				1615C6A11E9AF6B500EFCAC5 /* VTMapViewController.swift in Sources */,
 				1615C6901E9AE26200EFCAC5 /* Model.xcdatamodeld in Sources */,
 				1615C6751E997AF200EFCAC5 /* AppDelegate.swift in Sources */,
 				1615C6941E9AF16B00EFCAC5 /* FlickrClient.swift in Sources */,
-				1615C6A31E9AF6E000EFCAC5 /* GCDBlackBox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
