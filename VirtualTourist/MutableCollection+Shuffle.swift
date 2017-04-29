@@ -3,6 +3,7 @@
 //  VirtualTourist
 //
 //  Created by Jacob Marttinen on 4/29/17.
+//  Sourced from StackOverflow (Nate Cook): http://stackoverflow.com/a/24029847/2066437
 //  Copyright © 2017 Jacob Marttinen. All rights reserved.
 //
 
